@@ -96,11 +96,12 @@ class Network(object):
         return [results, np.sum(error) / len(error)]
 
     def predict(self, data):
-        results = []
-        for x in test_data:
+        results = np.zeros(shape = (data.shape[0], 3))
+        it = 0
+        for x in data:
             r = self.feedforward(np.reshape(x, (len(x), -1))) 
-            results.append(r)
-
+            results[it, :] = r.T
+            it = it + 1
         return results
 
 
