@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import nnetwork
 
-net = nnetwork.Network([9, 5, 3])
+net = nnetwork.Network([9, 5, 4, 3])
 
 def normalize(dat):
     dat = dat / 255.0
@@ -15,14 +15,16 @@ def trainNetwork():
     train_data = normalize(np.concatenate((input, output), axis = 1))
     s = train_data.shape[0]
     np.random.shuffle(train_data)
-    valid_data = train_data[math.floor(s * 0.6):math.floor(s * 0.8), :]
+    valid_data = train_data[math.floor(s * 0.7):math.floor(s * 0.8), :]
     test_data =  train_data[math.floor(s * 0.8):s, :]
-    train_data =  train_data[0:math.floor(s * 0.6), :]
+    train_data =  train_data[0:math.floor(s * 0.7), :]
     #x = np.array([1, 2, 3, 4, 5, 6, 7, 8])
-    epochs = 1
-    fp = net.SGD(list(zip(train_data[:,0:9], train_data[:, 9:12])), epochs, 50, 4.0, 125, list(zip(valid_data[:,0:9], valid_data[:, 9:12])))
+    epochs = 250
+    fp = net.SGD(list(zip(train_data[:,0:9], train_data[:, 9:12])), epochs, 60, 4.0, 50, list(zip(valid_data[:,0:9], valid_data[:, 9:12])))
     ev = net.evaluate(list(zip(test_data[:,0:9], test_data[:, 9:12])))
     nev = np.array(ev[0])
+
+    ### Plot Data ###
     plt.figure(1)
     plt.plot(fp)
     plt.figure(2)
