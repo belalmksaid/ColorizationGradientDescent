@@ -14,8 +14,16 @@ class Network(object):
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
-        print(np.array(self.biases).shape)
         
+
+    def save(self, dir): # doesn't work
+        np.savetxt(dir + "/biases.csv", self.biases, fmt='%.5f', delimiter=',')
+        np.savetxt(dir + "/weights.csv", self.weights,fmt='%.5f', delimiter=',')
+
+
+    def load(self, dir):
+        self.biases = np.genfromtxt(dir + "/biases.csv", delimiter=',')
+        self.weights = np.genfromtxt(dir + "/weights.csv", delimiter=',')
 
     def feedforward(self, a):
         for b, w in zip(self.biases, self.weights):
